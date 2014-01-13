@@ -1,4 +1,4 @@
-package com.miviclin.pooledlinkedqueue;
+package com.miviclin.collections;
 
 import java.util.AbstractQueue;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.miviclin.pooledlinkedqueue;
+package com.miviclin.collections;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.junit.Test;
+
+import com.miviclin.collections.PooledLinkedQueue;
 
 public class PooledLinkedQueueTest {
 
