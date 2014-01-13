@@ -244,12 +244,20 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 
 	}
 
+	/**
+	 * Iterator for PooledLinkedQueue.
+	 * 
+	 * @author Miguel Vicente Linares
+	 */
 	private class PooledLinkedQueueIterator implements Iterator<E> {
 
 		private Node<E> lastReturnedNode;
 		private Node<E> nextNode;
 		private boolean allowRemove;
 
+		/**
+		 * Creates a new PooledLinkedQueueIterator.
+		 */
 		public PooledLinkedQueueIterator() {
 			this.lastReturnedNode = null;
 			this.nextNode = head;
