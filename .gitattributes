@@ -1,0 +1,9 @@
+# Detect all text files automatically and normalize them (default)
+*               text=auto
+
+# These files are text and should be normalized
+*.java          text
+*.project       text
+*.properties    text
+*.classpath     text
+*.prefs         text
