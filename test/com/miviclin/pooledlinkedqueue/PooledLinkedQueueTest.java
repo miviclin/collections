@@ -20,6 +20,12 @@ public class PooledLinkedQueueTest {
 		assertEquals(2, queue.size());
 	}
 
+	@Test(expected = NullPointerException.class)
+	public void offerNullTest() {
+		PooledLinkedQueue<String> queue = new PooledLinkedQueue<>(10);
+		queue.offer(null);
+	}
+
 	@Test
 	public void pollTest() {
 		PooledLinkedQueue<String> queue = new PooledLinkedQueue<>(10);

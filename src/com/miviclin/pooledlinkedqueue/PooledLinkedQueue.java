@@ -36,15 +36,17 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		}
 	}
 
-	public PooledLinkedQueue(Collection<E> data) {
-		this(data.size());
-		for (E e : data) {
-			offer(e);
-		}
+	public PooledLinkedQueue(Collection<E> collection) {
+		this(collection.size());
+		addAll(collection);
 	}
 
 	@Override
 	public boolean offer(E e) {
+		if (e == null) {
+			throw new NullPointerException();
+		}
+
 		Node<E> node = obtainNode();
 		node.setItem(e);
 		if (size == 0) {
