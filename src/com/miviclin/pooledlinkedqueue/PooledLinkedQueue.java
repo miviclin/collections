@@ -94,7 +94,7 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		if (head == tail) {
 			tail = null;
 		}
-		E removedItem = recycleHead();
+		E removedItem = removeHead();
 		if (removedItem != null) {
 			size--;
 		}
@@ -119,6 +119,11 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		return size;
 	}
 
+	/**
+	 * Returns a node from the pool if possible. If the pool is empty, creates a new node and returns it.
+	 * 
+	 * @return Node
+	 */
 	private Node<E> obtainNode() {
 		if (nodePool.size() == 0) {
 			return new Node<E>();
@@ -127,12 +132,22 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		return nodePool.remove(index);
 	}
 
+	/**
+	 * Resets the specified node and stores it in the pool for later use.
+	 * 
+	 * @param node Node.
+	 */
 	private void recycleNode(Node<E> node) {
 		node.reset();
 		nodePool.add(node);
 	}
 
-	private E recycleHead() {
+	/**
+	 * Removes the head node and recycles it.
+	 * 
+	 * @return Item of the removed head.
+	 */
+	private E removeHead() {
 		Node<E> previousHead = head;
 		head = head.getNextNode();
 		if (head != null) {
