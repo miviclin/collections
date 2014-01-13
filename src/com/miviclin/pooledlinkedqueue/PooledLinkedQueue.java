@@ -21,10 +21,18 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 	private int size;
 	private ArrayList<Node<E>> nodePool;
 
+	/**
+	 * Creates a new PooledLinkedQueue with 10 pooled nodes.
+	 */
 	public PooledLinkedQueue() {
 		this(10);
 	}
 
+	/**
+	 * Creates a new PooledLinkedQueue with the specified initial number of pooled nodes.
+	 * 
+	 * @param initialNumPooledNodes Initial number of pooled nodes.
+	 */
 	public PooledLinkedQueue(int initialNumPooledNodes) {
 		super();
 		this.head = null;
@@ -36,8 +44,25 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		}
 	}
 
+	/**
+	 * Creates a new PooledLinkedQueue filled with the specified collection and 0 pooled nodes.
+	 * 
+	 * @param collection Collection.
+	 */
 	public PooledLinkedQueue(Collection<E> collection) {
-		this(collection.size());
+		this(0, collection);
+	}
+
+	/**
+	 * Creates a new PooledLinkedQueue filled with the specified collection and the specified initial number of pooled
+	 * nodes.
+	 * 
+	 * @param initialNumPooledNodes Initial number of pooled nodes. After the collection is added to the queue, the
+	 *            specified amount of pooled nodes will be available for later insertions.
+	 * @param collection Collection.
+	 */
+	public PooledLinkedQueue(int initialNumPooledNodes, Collection<E> collection) {
+		this(initialNumPooledNodes + collection.size());
 		addAll(collection);
 	}
 
