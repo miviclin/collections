@@ -159,42 +159,85 @@ public class PooledLinkedQueue<E> extends AbstractQueue<E> {
 		return item;
 	}
 
+	/**
+	 * Node.
+	 * 
+	 * @author Miguel Vicente Linares
+	 * 
+	 * @param <E>
+	 */
 	private static class Node<E> {
 
 		private E item;
 		private Node<E> nextNode;
 		private Node<E> previousNode;
 
+		/**
+		 * Creates a new Node.
+		 */
 		public Node() {
 			reset();
 		}
 
+		/**
+		 * Resets the item, nextNode and previousNode to null.
+		 */
 		void reset() {
 			this.item = null;
 			this.nextNode = null;
 			this.previousNode = null;
 		}
 
+		/**
+		 * Returns the item of this Node.
+		 * 
+		 * @return The item of this Node.
+		 */
 		public E getItem() {
 			return item;
 		}
 
+		/**
+		 * Sets the item of this Node.
+		 * 
+		 * @param item New value.
+		 */
 		public void setItem(E item) {
 			this.item = item;
 		}
 
+		/**
+		 * Returns the next Node.
+		 * 
+		 * @return Next Node
+		 */
 		public Node<E> getNextNode() {
 			return nextNode;
 		}
 
+		/**
+		 * Sets the next Node.
+		 * 
+		 * @param nextNode New value.
+		 */
 		public void setNextNode(Node<E> nextNode) {
 			this.nextNode = nextNode;
 		}
 
+		/**
+		 * Returns the previous Node.
+		 * 
+		 * @return Previous Node
+		 */
 		public Node<E> getPreviousNode() {
 			return previousNode;
 		}
 
+		/**
+		 * Sets the previous Node.
+		 * 
+		 * @param previousNode New value.
+		 */
 		public void setPreviousNode(Node<E> previousNode) {
 			this.previousNode = previousNode;
 		}
