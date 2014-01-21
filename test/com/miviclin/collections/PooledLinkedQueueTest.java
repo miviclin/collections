@@ -1,6 +1,7 @@
 package com.miviclin.collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,46 +19,46 @@ public class PooledLinkedQueueTest {
 		private PooledLinkedQueue<String> queue;
 
 		@Before
-		public void initialize() {
+		public void givenAnEmptyPooledLinkedQueue() {
 			queue = new PooledLinkedQueue<>();
 		}
 
 		@Test
-		public void initialized_shouldHaveZeroElements() throws Exception {
+		public void whenInitialized_thenTheQueueShouldHaveZeroElements() throws Exception {
 			assertEquals(0, queue.size());
 		}
 
 		@Test
-		public void initialized_headShouldBeNull() throws Exception {
+		public void whenInitialized_thenTheHeadOfTheQueueShouldBeNull() throws Exception {
 			assertEquals(null, queue.peek());
 		}
 
 		@Test
-		public void elementPolled_shouldHaveZeroElements() throws Exception {
+		public void whenAnElementIsPolled_thenTheQueueShouldHaveZeroElements() throws Exception {
 			queue.poll();
 			assertEquals(0, queue.size());
 		}
 
 		@Test
-		public void elementPolled_headShouldBeNull() throws Exception {
+		public void whenAnElementIsPolled_thenTheHeadOfTheQueueShouldBeNull() throws Exception {
 			queue.poll();
 			assertEquals(null, queue.peek());
 		}
 
 		@Test
-		public void elementPolled_shouldReturnNull() throws Exception {
+		public void whenAnElementIsPolled_thenTheReturnedElementShouldBeNull() throws Exception {
 			String polledElement = queue.poll();
 			assertEquals(null, polledElement);
 		}
 
 		@Test
-		public void elementOffered_shouldHaveOneElement() throws Exception {
+		public void whenAnElementIsOffered_thenTheQueueShouldHaveOneElement() throws Exception {
 			queue.offer("A");
 			assertEquals(1, queue.size());
 		}
 
 		@Test
-		public void elementOffered_headShouldBeTheOfferedElement() throws Exception {
+		public void whenAnElementIsOffered_thenTheHeadOfTheQueueShouldBeTheOfferedElement() throws Exception {
 			String element = "A";
 			queue.offer(element);
 			assertEquals(element, queue.peek());
@@ -66,50 +67,49 @@ public class PooledLinkedQueueTest {
 
 	public static class PooledLinkedQueueWithOneElementFixture {
 
-		private static final String ELEMENT = "element";
 		private PooledLinkedQueue<String> queue;
 
 		@Before
-		public void initialize() {
+		public void givenAPooledLinkedQueueWithOneElement() {
 			queue = new PooledLinkedQueue<>();
-			queue.offer(ELEMENT);
+			queue.offer("E1");
 		}
 
 		@Test
-		public void initialized_shouldHaveOneElement() throws Exception {
+		public void whenInitialized_thenTheQueueShouldHaveOneElement() throws Exception {
 			assertEquals(1, queue.size());
 		}
 
 		@Test
-		public void initialized_shouldReturnElementOnPeek() throws Exception {
-			assertEquals(ELEMENT, queue.peek());
+		public void whenInitialized_thenTheHeadOfTheQueueShouldNotBeNull() throws Exception {
+			assertNotEquals(null, queue.peek());
 		}
 
 		@Test
-		public void elementPolled_shouldReturnElement() throws Exception {
-			assertEquals(ELEMENT, queue.poll());
+		public void whenAnElementIsPolled_thenTheReturnedElementShouldNotBeNull() throws Exception {
+			assertNotEquals(null, queue.poll());
 		}
 
 		@Test
-		public void elementPolled_shouldHaveZeroElements() throws Exception {
+		public void whenAnElementIsPolled_thenTheQueueShouldHaveZeroElements() throws Exception {
 			queue.poll();
 			assertEquals(0, queue.size());
 		}
 
 		@Test
-		public void elementPolled_headShouldBeNull() throws Exception {
+		public void whenAnElementIsPolled_thenTheHeadOfTheQueueShouldBeNull() throws Exception {
 			queue.poll();
 			assertEquals(null, queue.peek());
 		}
 
 		@Test
-		public void elementOffered_shouldHaveTwoElements() throws Exception {
+		public void whenAnElementIsOffered_thenTheQueueShouldHaveTwoElements() throws Exception {
 			queue.offer("A");
 			assertEquals(2, queue.size());
 		}
 
 		@Test
-		public void elementOffered_headShouldNotHaveChanged() throws Exception {
+		public void whenAnElementIsOffered_thenTheHeadOfTheQueueShouldNotBeChanged() throws Exception {
 			String head = queue.peek();
 			String element = "A";
 			queue.offer(element);
@@ -117,7 +117,9 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void elementOfferedAndThenElementPolled_headShouldBeTheOfferedElement() throws Exception {
+		public void whenAnElementIsOfferedAndThenItIsPolled_thenTheHeadOfTheQueueShouldBeTheOfferedElement()
+				throws Exception {
+
 			String element = "A";
 			queue.offer(element);
 			queue.poll();
@@ -131,7 +133,7 @@ public class PooledLinkedQueueTest {
 		private PooledLinkedQueue<String> queue;
 
 		@Before
-		public void initialize() {
+		public void given() {
 			testElementsList = new ArrayList<>();
 			testElementsList.add("E1");
 			testElementsList.add("E2");
@@ -140,12 +142,12 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void initialized_shouldHaveTheSameSizeAsTestElementsList() throws Exception {
+		public void whenInitialized_thenTheQueueShouldHaveTheSameSizeAsTestElementsList() throws Exception {
 			assertEquals(testElementsList.size(), queue.size());
 		}
 
 		@Test
-		public void elementPolled_shouldDecrementSizeInOne() {
+		public void whenAnElementIsPolled_thenTheQueueShouldDecrementItsSizeInOne() {
 			int initialSize = queue.size();
 			queue.poll();
 			int currentSize = queue.size();
@@ -153,14 +155,14 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void elementPolled_shouldReturnTheHeadOfTheQueue() {
+		public void whenAnElementIsPolled_thenTheReturnedElementShouldBeTheHeadOfTheQueue() {
 			String head = queue.peek();
 			String polledElement = queue.poll();
 			assertEquals(head, polledElement);
 		}
 
 		@Test
-		public void elementOffered_shouldIncrementSizeInOne() throws Exception {
+		public void whenAnElementIsOffered_thenTheQueueShouldIncrementItsSizeInOne() throws Exception {
 			int initialSize = queue.size();
 			queue.offer("A");
 			int currentSize = queue.size();
@@ -168,7 +170,7 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void elementOffered_headShouldNotHaveChanged() throws Exception {
+		public void whenAnElementIsOffered_TheHeadOfTheQueueShouldNotBeChanged() throws Exception {
 			String head = queue.peek();
 			String element = "A";
 			queue.offer(element);
@@ -176,7 +178,9 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void elementOfferedAndThenAllPreviousElementsPolled_headShouldBeTheOfferedElement() throws Exception {
+		public void whenAnElementIsOfferedAndThenAllOtherElementsArePolled_thenTheHeadOfTheQueueShouldBeTheNewElement()
+				throws Exception {
+
 			int initialSize = queue.size();
 			String element = "A";
 			queue.offer(element);
@@ -187,12 +191,12 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test(expected = NullPointerException.class)
-		public void nullElementOffered_shouldThrowNullPointerException() {
+		public void whenANullElementIsOffered_thenANullPointerExceptionShouldBeThrown() {
 			queue.offer(null);
 		}
 
 		@Test
-		public void iterated_shouldIterateThroughAllElements() {
+		public void whenTheQueueIsIterated_thenTheIteratorShouldIterateThroughAllElements() {
 			int i = 0;
 			Iterator<String> iterator = queue.iterator();
 			while (iterator.hasNext()) {
@@ -203,7 +207,7 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void iterated_shouldHaveTheSameElementsTestElementsListHas() {
+		public void whenTheQueueIsIterated_thenTheIteratorShouldReturnTheSameElementsTestElementsListHas() {
 			int i = 0;
 			Iterator<String> iterator = queue.iterator();
 			while (iterator.hasNext()) {
@@ -214,7 +218,7 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void iteratorRemoveBeforeCallingNext_shouldDoNothing() {
+		public void whenTheIteratorRemoveIsCalledBeforeNext_thenItShouldDoNothing() {
 			Iterator<String> iterator = queue.iterator();
 			iterator.remove();
 			int i = 0;
@@ -227,17 +231,16 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test
-		public void iteratorRemoveFirstElement_shouldRemoveTheHeadOfTheQueue() {
+		public void whenTheIteratorIsUsedToRemoveTheFirstElement_thenTheHeadOfTheQueueShouldBeRemoved() {
 			String head = queue.peek();
 			Iterator<String> iterator = queue.iterator();
 			iterator.next();
 			iterator.remove();
 			assertEquals(false, queue.contains(head));
-
 		}
 
 		@Test
-		public void iteratorRemove_shouldDecrementSizeInOne() {
+		public void whenTheIteratorIsUsedToRemoveAnElement_thenTheSizeOfTheQueueShouldBeDecrementedInOne() {
 			int initialSize = queue.size();
 			Iterator<String> iterator = queue.iterator();
 			iterator.next();
@@ -247,7 +250,7 @@ public class PooledLinkedQueueTest {
 		}
 
 		@Test(expected = IllegalStateException.class)
-		public void iteratorRemove_shouldThrowIllegalStateExceptionWhenCallingRemoveTwiceBeforeCallingNext() {
+		public void whenTheIteratorRemoveIsCalledTwice_thenAnIllegalStateExceptionShouldBeCalled() {
 			Iterator<String> iterator = queue.iterator();
 			iterator.next();
 			iterator.next();

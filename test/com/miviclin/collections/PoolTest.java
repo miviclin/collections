@@ -17,37 +17,39 @@ public class PoolTest {
 		private Pool<TestUser> pool;
 
 		@Before
-		public void initialize() {
+		public void given() {
 			pool = new TestUserPool();
 		}
 
 		@Test
-		public void initialized_shouldHaveZeroElements() throws Exception {
+		public void whenInitialized_thenThePoolShouldHaveZeroElements() throws Exception {
 			assertEquals(0, pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldHaveZeroElements() throws Exception {
+		public void whenATestUserIsObtained_thenTheQueueShouldHaveZeroElements() throws Exception {
 			pool.obtain();
 			assertEquals(0, pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldReturnTestUserWithDefaultNameAndPassword() throws Exception {
+		public void whenATestUserIsObtained_thenTheReturnedTestUserShouldHaveDefaultNameAndPassword() throws Exception {
 			TestUser testUser = pool.obtain();
 			assertEquals(TestUser.DEFAULT_NAME, testUser.getName());
 			assertEquals(TestUser.DEFAULT_PASSWORD, testUser.getPassword());
 		}
 
 		@Test
-		public void testUserRecycled_shouldHaveOneElement() throws Exception {
+		public void whenATestUserIsRecycled_thenThePoolShouldHaveOneElement() throws Exception {
 			TestUser testUser = new TestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			assertEquals(1, pool.size());
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnTheRecycledElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_thenTheReturnedElementShouldBeTheRecycledElement()
+				throws Exception {
+
 			TestUser testUser = new TestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			TestUser obtainedTestUser = pool.obtain();
@@ -61,7 +63,7 @@ public class PoolTest {
 		private Pool<TestUser> pool;
 
 		@Before
-		public void initialize() {
+		public void given() {
 			testUsersList = new LinkedList<>();
 			testUsersList.add(new TestUser("name1", "password1"));
 			testUsersList.add(new TestUser("name2", "password2"));
@@ -73,18 +75,20 @@ public class PoolTest {
 		}
 
 		@Test
-		public void initialized_shouldHaveTheSameSizeAsTestUsersList() throws Exception {
+		public void whenInitialized_thenThePoolShouldHaveTheSameSizeAsTestUsersList() throws Exception {
 			assertEquals(testUsersList.size(), pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldReturnLastTestUserOfTestUsersList() throws Exception {
+		public void whenATestUserIsObtained_thenTheReturnedTestUserShouldBeTheLastTestUserOfTestUsersList()
+				throws Exception {
+
 			TestUser testUser = pool.obtain();
 			assertEquals(testUsersList.getLast(), testUser);
 		}
 
 		@Test
-		public void testUserRecycled_shouldIncrementSizeInOne() throws Exception {
+		public void whenATestUserIsRecycled_thenThePoolShouldIncrementItsSizeInOne() throws Exception {
 			int initialSize = pool.size();
 			pool.recycle(new TestUser("testName", "testPassword"));
 			int currentSize = pool.size();
@@ -92,7 +96,7 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserObtained_shouldDecrementSizeInOne() throws Exception {
+		public void whenATestUserIsObtained_thenThePoolShouldDecrementItsSizeInOne() throws Exception {
 			int initialSize = pool.size();
 			pool.obtain();
 			int currentSize = pool.size();
@@ -100,7 +104,9 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnTheRecycledElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_thenTheReturnedElementShouldBeTheRecycledElement()
+				throws Exception {
+
 			TestUser testUser = new TestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			TestUser obtainedTestUser = pool.obtain();
@@ -108,7 +114,9 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnAnUnresettedElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_thenTheReturnedElementShouldBeAnUnresettedElement()
+				throws Exception {
+
 			TestUser testUser = new TestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			TestUser obtainedTestUser = pool.obtain();
@@ -122,37 +130,39 @@ public class PoolTest {
 		private Pool<PoolableTestUser> pool;
 
 		@Before
-		public void initialize() {
+		public void given() {
 			pool = new PoolableTestUserPool();
 		}
 
 		@Test
-		public void initialized_shouldHaveZeroElements() throws Exception {
+		public void whenInitialized_thenThePoolShouldHaveZeroElements() throws Exception {
 			assertEquals(0, pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldHaveZeroElements() throws Exception {
+		public void whenATestUserIsObtained_thenThePoolShouldHaveZeroElements() throws Exception {
 			pool.obtain();
 			assertEquals(0, pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldReturnTestUserWithResettedNameAndPassword() throws Exception {
+		public void whenATestUserIsObtained_thenTheReturnedTestUserShouldHaveResettedNameAndPassword() throws Exception {
 			PoolableTestUser testUser = pool.obtain();
 			assertEquals(PoolableTestUser.DEFAULT_RESETTED_NAME, testUser.getName());
 			assertEquals(PoolableTestUser.DEFAULT_RESETTED_PASSWORD, testUser.getPassword());
 		}
 
 		@Test
-		public void testUserRecycled_shouldHaveOneElement() throws Exception {
+		public void whenATestUserIsRecycled_thenThePoolShouldHaveOneElement() throws Exception {
 			PoolableTestUser testUser = new PoolableTestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			assertEquals(1, pool.size());
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnTheRecycledElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_ThenTheReturnedElementShouldBeTheRecycledElement()
+				throws Exception {
+
 			PoolableTestUser testUser = new PoolableTestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			TestUser obtainedTestUser = pool.obtain();
@@ -166,7 +176,7 @@ public class PoolTest {
 		private Pool<PoolableTestUser> pool;
 
 		@Before
-		public void initialize() {
+		public void given() {
 			testUsersList = new LinkedList<>();
 			testUsersList.add(new PoolableTestUser("name1", "password1"));
 			testUsersList.add(new PoolableTestUser("name2", "password2"));
@@ -178,18 +188,20 @@ public class PoolTest {
 		}
 
 		@Test
-		public void initialized_shouldHaveTheSameSizeAsTestUsersList() throws Exception {
+		public void whenInitialized_thenThePoolShouldHaveTheSameSizeAsTestUsersList() throws Exception {
 			assertEquals(testUsersList.size(), pool.size());
 		}
 
 		@Test
-		public void testUserObtained_shouldReturnLastTestUserOfTestUsersList() throws Exception {
+		public void whenATestUserIsObtained_thenTheReturnedElementShouldBeTheLastTestUserOfTestUsersList()
+				throws Exception {
+
 			PoolableTestUser testUser = pool.obtain();
 			assertEquals(testUsersList.getLast(), testUser);
 		}
 
 		@Test
-		public void testUserRecycled_shouldIncrementSizeInOne() throws Exception {
+		public void whenATestUserIsRecycled_thenThePoolShouldIncrementItsSizeInOne() throws Exception {
 			int initialSize = pool.size();
 			pool.recycle(new PoolableTestUser("testName", "testPassword"));
 			int currentSize = pool.size();
@@ -197,7 +209,7 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserObtained_shouldDecrementSizeInOne() throws Exception {
+		public void whenATestUserIsObtained_thenThePoolShouldDecrementItsSizeInOne() throws Exception {
 			int initialSize = pool.size();
 			pool.obtain();
 			int currentSize = pool.size();
@@ -205,7 +217,9 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnTheRecycledElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_thenTheReturnedElementShouldBeTheRecycledElement()
+				throws Exception {
+
 			PoolableTestUser testUser = new PoolableTestUser("testName", "testPassword");
 			pool.recycle(testUser);
 			TestUser obtainedTestUser = pool.obtain();
@@ -213,7 +227,9 @@ public class PoolTest {
 		}
 
 		@Test
-		public void testUserRecycledAndThenObtained_shouldReturnAResettedElement() throws Exception {
+		public void whenATestUserIsRecycledAndThenObtained_thenTheReturnedElementShouldBeAResettedElement()
+				throws Exception {
+
 			PoolableTestUser testUser = new PoolableTestUser(TestUser.DEFAULT_NAME, TestUser.DEFAULT_PASSWORD);
 			pool.recycle(testUser);
 			PoolableTestUser obtainedTestUser = pool.obtain();
