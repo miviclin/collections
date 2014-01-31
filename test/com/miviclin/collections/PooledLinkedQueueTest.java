@@ -133,7 +133,7 @@ public class PooledLinkedQueueTest {
 		private PooledLinkedQueue<String> queue;
 
 		@Before
-		public void given() {
+		public void givenAPooledLinkedQueueMoreThanOneElement() {
 			testElementsList = new ArrayList<>();
 			testElementsList.add("E1");
 			testElementsList.add("E2");

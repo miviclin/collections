@@ -17,13 +17,18 @@ public class PoolTest {
 		private Pool<TestUser> pool;
 
 		@Before
-		public void given() {
+		public void givenAnEmptyPoolOfTestUsers() {
 			pool = new TestUserPool();
 		}
 
 		@Test
 		public void whenInitialized_thenThePoolShouldHaveZeroElements() throws Exception {
 			assertEquals(0, pool.size());
+		}
+
+		@Test
+		public void whenInitialized_thenThePoolShouldBeEmpty() throws Exception {
+			assertEquals(true, pool.isEmpty());
 		}
 
 		@Test
@@ -37,6 +42,11 @@ public class PoolTest {
 			TestUser testUser = pool.obtain();
 			assertEquals(TestUser.DEFAULT_NAME, testUser.getName());
 			assertEquals(TestUser.DEFAULT_PASSWORD, testUser.getPassword());
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void whenANullObjectIsRecycled_thenAnIllegalArgumentExceptionShouldBeThrown() throws Exception {
+			pool.recycle(null);
 		}
 
 		@Test
@@ -63,7 +73,7 @@ public class PoolTest {
 		private Pool<TestUser> pool;
 
 		@Before
-		public void given() {
+		public void givenANonEmptyPoolOfTestUsers() {
 			testUsersList = new LinkedList<>();
 			testUsersList.add(new TestUser("name1", "password1"));
 			testUsersList.add(new TestUser("name2", "password2"));
@@ -80,11 +90,27 @@ public class PoolTest {
 		}
 
 		@Test
+		public void whenInitialized_thenThePoolShouldNotBeEmpty() throws Exception {
+			assertEquals(false, pool.isEmpty());
+		}
+
+		@Test
+		public void whenThePoolIsCleared_thenThePoolShouldBeEmpty() throws Exception {
+			pool.clear();
+			assertEquals(true, pool.isEmpty());
+		}
+
+		@Test
 		public void whenATestUserIsObtained_thenTheReturnedTestUserShouldBeTheLastTestUserOfTestUsersList()
 				throws Exception {
 
 			TestUser testUser = pool.obtain();
 			assertEquals(testUsersList.getLast(), testUser);
+		}
+
+		@Test(expected = IllegalArgumentException.class)
+		public void whenANullObjectIsRecycled_thenAnIllegalArgumentExceptionShouldBeThrown() throws Exception {
+			pool.recycle(null);
 		}
 
 		@Test
@@ -130,13 +156,18 @@ public class PoolTest {
 		private Pool<PoolableTestUser> pool;
 
 		@Before
-		public void given() {
+		public void givenAnEmptyPoolOfPoolableTestUsers() {
 			pool = new PoolableTestUserPool();
 		}
 
 		@Test
 		public void whenInitialized_thenThePoolShouldHaveZeroElements() throws Exception {
 			assertEquals(0, pool.size());
+		}
+
+		@Test
+		public void whenInitialized_thenThePoolShouldBeEmpty() throws Exception {
+			assertEquals(true, pool.isEmpty());
 		}
 
 		@Test
@@ -176,7 +207,7 @@ public class PoolTest {
 		private Pool<PoolableTestUser> pool;
 
 		@Before
-		public void given() {
+		public void givenANonEmptyPoolOfPoolableTestUsers() {
 			testUsersList = new LinkedList<>();
 			testUsersList.add(new PoolableTestUser("name1", "password1"));
 			testUsersList.add(new PoolableTestUser("name2", "password2"));
@@ -190,6 +221,17 @@ public class PoolTest {
 		@Test
 		public void whenInitialized_thenThePoolShouldHaveTheSameSizeAsTestUsersList() throws Exception {
 			assertEquals(testUsersList.size(), pool.size());
+		}
+
+		@Test
+		public void whenInitialized_thenThePoolShouldNotBeEmpty() throws Exception {
+			assertEquals(false, pool.isEmpty());
+		}
+
+		@Test
+		public void whenThePoolIsCleared_thenThePoolShouldBeEmpty() throws Exception {
+			pool.clear();
+			assertEquals(true, pool.isEmpty());
 		}
 
 		@Test
