@@ -6,8 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * This queue is implemented as a linked list. The main difference is that this queue has a pool of nodes, so it does
- * not need to create new nodes if there are nodes available in the pool.<br>
+ * This queue is implemented as a linked list with a pool of nodes. The main difference is that this queue has a pool of
+ * nodes, so it does not need to create new nodes if there are nodes available in the pool.<br>
  * This queue does not allow null objects.
  * 
  * @author Miguel Vicente Linares
