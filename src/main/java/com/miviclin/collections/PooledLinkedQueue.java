@@ -20,8 +20,10 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * This queue is implemented as a linked list with a pool of nodes. The main difference is that this queue has a pool of
- * nodes, so it does not need to create new nodes if there are nodes available in the pool.<br>
+ * This queue is implemented as a linked list that holds an internal pool of nodes. The main difference between this
+ * queue and a LinkedList is that this queue has a pool of nodes, so it does not need to create new nodes if there are
+ * nodes available in the pool. This collection may be useful in applications such as games, where preventing the
+ * garbage collector from being triggered while the game is running is usually required.<br>
  * This queue does not allow null objects.
  * 
  * @author Miguel Vicente Linares

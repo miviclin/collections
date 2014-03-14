@@ -17,7 +17,10 @@ package com.miviclin.collections;
 import java.util.ArrayList;
 
 /**
- * Object Pool.
+ * A simple object pool. If an object is not needed anymore, it can be stored in the pool instead of being freed by the
+ * garbage collector. And when a new object of the same type is needed, the stored object can be obtained from the pool
+ * and re-initialized instead of creating a new object. This collection may be useful in applications such as games,
+ * where preventing the garbage collector from being triggered while the game is running is usually required.
  * 
  * @author Miguel Vicente Linares
  * 
