@@ -294,7 +294,7 @@ public class PoolTest {
 		}
 	}
 
-	static class TestUserPool extends Pool<TestUser> {
+	private static class TestUserPool extends Pool<TestUser> {
 
 		@Override
 		public TestUser createObject() {
@@ -303,7 +303,7 @@ public class PoolTest {
 
 	}
 
-	static class PoolableTestUserPool extends Pool<PoolableTestUser> {
+	private static class PoolableTestUserPool extends Pool<PoolableTestUser> {
 
 		@Override
 		public PoolableTestUser createObject() {
@@ -313,7 +313,7 @@ public class PoolTest {
 
 	}
 
-	static class TestUser {
+	private static class TestUser {
 
 		public static String DEFAULT_NAME = "username";
 		public static String DEFAULT_PASSWORD = "password";
@@ -345,7 +345,7 @@ public class PoolTest {
 
 	}
 
-	static class PoolableTestUser extends TestUser implements Pool.Poolable {
+	private static class PoolableTestUser extends TestUser implements Pool.Poolable {
 
 		public static String DEFAULT_RESETTED_NAME = "resetted name";
 		public static String DEFAULT_RESETTED_PASSWORD = "resetted password";
