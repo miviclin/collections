@@ -130,7 +130,7 @@ public class PooledLinkedQueueTest {
 	}
 
 	@Test
-	public void poll_queueWithOneElement_hasZeroElements() throws Exception {
+	public void poll_queueWithOneElement_sizeIsZero() throws Exception {
 		PooledLinkedQueue<String> queue = createPooledLinkedQueue(1);
 
 		queue.poll();

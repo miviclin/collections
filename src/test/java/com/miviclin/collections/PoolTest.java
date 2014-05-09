@@ -18,13 +18,70 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.LinkedList;
 
+import junitparams.JUnitParamsRunner;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
-@RunWith(Enclosed.class)
+@RunWith(JUnitParamsRunner.class)
 public class PoolTest {
+
+	@Test
+	public void createEmptyPool_byDefault_sizeIsZero() throws Exception {
+		Pool<TestUser> pool = createEmptyPoolOfTestUsers();
+
+		int size = pool.size();
+
+		Assert.assertEquals(0, size);
+	}
+
+	@Test
+	public void createEmptyPool_byDefault_isEmpty() throws Exception {
+		Pool<TestUser> pool = createEmptyPoolOfTestUsers();
+
+		boolean empty = pool.isEmpty();
+
+		Assert.assertTrue(empty);
+	}
+
+	@Test
+	public void obtain_emptyPool_hasZeroElements() throws Exception {
+		Pool<TestUser> pool = createEmptyPoolOfTestUsers();
+
+		pool.obtain();
+		int size = pool.size();
+
+		Assert.assertEquals(0, size);
+	}
+
+	@Test
+	public void obtain_emptyPool_returnsNewObject() throws Exception {
+		Pool<TestUser> pool = createEmptyPoolOfTestUsers();
+
+		TestUser testUser = pool.obtain();
+		String testUserName = testUser.getName();
+		String testUserPassword = testUser.getPassword();
+
+		assertEquals(TestUser.DEFAULT_NAME, testUserName);
+		assertEquals(TestUser.DEFAULT_PASSWORD, testUserPassword);
+	}
+
+	@Test
+	public void recycle_emptyPool_hasOneElement() throws Exception {
+		Pool<TestUser> pool = createEmptyPoolOfTestUsers();
+
+		TestUser testUser = new TestUser("testName", "testPassword");
+		pool.recycle(testUser);
+		int size = pool.size();
+
+		assertEquals(1, size);
+	}
+
+	private static Pool<TestUser> createEmptyPoolOfTestUsers() {
+		return new TestUserPool();
+	}
 
 	public static class EmptyPoolFixture {
 
@@ -35,39 +92,9 @@ public class PoolTest {
 			pool = new TestUserPool();
 		}
 
-		@Test
-		public void whenInitialized_thenThePoolShouldHaveZeroElements() throws Exception {
-			assertEquals(0, pool.size());
-		}
-
-		@Test
-		public void whenInitialized_thenThePoolShouldBeEmpty() throws Exception {
-			assertEquals(true, pool.isEmpty());
-		}
-
-		@Test
-		public void whenATestUserIsObtained_thenTheQueueShouldHaveZeroElements() throws Exception {
-			pool.obtain();
-			assertEquals(0, pool.size());
-		}
-
-		@Test
-		public void whenATestUserIsObtained_thenTheReturnedTestUserShouldHaveDefaultNameAndPassword() throws Exception {
-			TestUser testUser = pool.obtain();
-			assertEquals(TestUser.DEFAULT_NAME, testUser.getName());
-			assertEquals(TestUser.DEFAULT_PASSWORD, testUser.getPassword());
-		}
-
 		@Test(expected = IllegalArgumentException.class)
 		public void whenANullObjectIsRecycled_thenAnIllegalArgumentExceptionShouldBeThrown() throws Exception {
 			pool.recycle(null);
-		}
-
-		@Test
-		public void whenATestUserIsRecycled_thenThePoolShouldHaveOneElement() throws Exception {
-			TestUser testUser = new TestUser("testName", "testPassword");
-			pool.recycle(testUser);
-			assertEquals(1, pool.size());
 		}
 
 		@Test
