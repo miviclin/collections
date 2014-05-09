@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitParamsRunner.class)
-public class PooledLinkedQueueTest {
+public class PooledLinkedQueueTests {
 
 	@Test
 	public void createEmptyQueue_byDefault_sizeIsZero() throws Exception {
