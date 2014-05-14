@@ -22,7 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(JUnitParamsRunner.class)
-public class PoolTests {
+public class PoolTest {
 
 	@Test
 	public void createEmptyPool_byDefault_sizeIsZero() throws Exception {
